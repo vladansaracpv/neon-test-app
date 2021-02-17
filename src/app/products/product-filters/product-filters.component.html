@@ -1,0 +1,23 @@
+<input id="search-box" [ngModel]="filter.code" (ngModelChange)="searchValueChange($event)" type="text"
+  placeholder="Search by product code">
+
+<div class="locations">
+  <div class="floors mt40">
+    <h2 class="mb16">Floors</h2>
+    <ul>
+      <li *ngFor="let floor of floors; let i = index; trackBy:i" [ngClass]="{'selected': filter['floor'] === floor}"
+        (click)="addFilter('floor', floor)">
+        {{floor}}</li>
+    </ul>
+  </div>
+
+  <div class="sections" *ngIf="filter['floor']">
+
+    <h2 class="mb16 mt40">Sections</h2>
+    <ul>
+      <li *ngFor="let section of sections" [ngClass]="{'selected': filter['section'] === section}"
+        (click)="addFilter('section', section)">{{section}}
+      </li>
+    </ul>
+  </div>
+</div>

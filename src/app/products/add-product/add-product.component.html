@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <div class="box">
+    <h3 class="title text-center uppercase mb32">Add new product</h3>
+
+    <form [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+      <div class="formGroup">
+        <label for="code">Code:</label>
+        <input type="text" id="code" class="form-control" formControlName="code">
+        <div *ngIf="submitted && form.code.errors" class="validation-error">
+          <div *ngIf="form.code.errors.required">Code is required</div>
+          <div *ngIf="form.code.errors.pattern">Please enter a valid code format</div>
+        </div>
+      </div>
+
+      <div class="formGroup">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" class="form-control" min="1" max="100" formControlName="quantity">
+        <div *ngIf="submitted && form.quantity.errors" class="validation-error">
+          <div *ngIf="form.quantity.errors.required">Please enter quantity</div>
+        </div>
+      </div>
+
+      <div class="formGroup">
+        <label for="floor">Floor:</label>
+        <select id="floor" formControlName="floor" class="form-control">
+          <option [ngValue]="null">Choose floor...</option>
+          <option *ngFor="let floor of floors">{{floor}}</option>
+        </select>
+        <div *ngIf="submitted && form.floor.errors" class="validation-error">
+          <div *ngIf="form.floor.errors.required">Product Floor Location is required</div>
+        </div>
+      </div>
+
+
+      <div class="formGroup">
+        <label for="section">Section:</label>
+        <select id="section" formControlName="section" class="form-control">
+          <option [ngValue]="null">Choose section...</option>
+          <option *ngFor="let section of sections">{{section}}</option>
+        </select>
+        <div *ngIf="submitted && form.section.errors" class="validation-error">
+          <div *ngIf="form.section.errors.required">Product Section Location is required</div>
+        </div>
+      </div>
+
+      <div class="btn-actions">
+        <button type="submit" routerLink="/products" class="btn small mr16">Cancel</button>
+        <button type="submit" class="btn green small">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

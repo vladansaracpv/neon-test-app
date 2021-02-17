@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="filters">
+    <app-product-filters (filterEvent)="filterProducts($event)" [locations]="locations"></app-product-filters>
+  </div>
+  <div class="divider"></div>
+  <div class="products">
+    <app-product-list [products]="filteredProducts" (editProductEvent)="editProduct($event)"
+      (addProductEvent)="addProduct($event)"></app-product-list>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+@import "./colors";
+
+.btn {
+  cursor: pointer;
+  color: white;
+  padding: 8px;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 32px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: $red;
+  width: 120px;
+  outline: transparent;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    border: 1px solid $red;
+  }
+
+  &.small {
+    width: 100px;
+  }
+}
+
+.btn.primary {
+  background-color: $red;
+  color: $white;
+}
+
+.btn.green {
+  background-color: $green;
+  color: $white;
+
+  &:hover {
+    border: unset;
+  }
+}

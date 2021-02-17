@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  height: calc(100% - 60px);
+}
+
+.filters {
+  flex-grow: 1;
+  padding: 20px;
+  max-width: 200px;
+  background: white;
+}
+
+.divider {
+  background: rgba(0, 0, 0, 0.1);
+  width: 1px;
+}
+
+.products {
+  flex-grow: 3;
+  padding: 40px;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .filters {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .products {
+    padding: 20px;
+  }
+}

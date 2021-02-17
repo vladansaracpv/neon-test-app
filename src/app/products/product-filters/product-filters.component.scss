@@ -1,0 +1,35 @@
+#search-box {
+  line-height: 2;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f6f7f9;
+}
+
+ul {
+  max-width: 120px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+li {
+  cursor: pointer;
+  padding: 6px;
+
+  &.selected {
+    background-color: rgb(255, 0, 30);
+    border-radius: 32px;
+    color: rgba(255, 255, 255);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .locations {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
