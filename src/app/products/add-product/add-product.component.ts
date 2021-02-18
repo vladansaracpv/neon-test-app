@@ -37,7 +37,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.addProductForm = this.fb.group({
-      code: ['', [Validators.required, Validators.pattern(/^([A-Z]){4,6} ([0-9]){4,6}$/)], [this.isValidCode()]],
+      code: ['', [Validators.required, Validators.pattern(/^([A-Z]){2,4} ([0-9]){4,6}$/)], [this.isValidCode()]],
       quantity: [1, Validators.required],
       floor: ['', Validators.required],
       section: [{ value: '', disabled: true }, Validators.required]
