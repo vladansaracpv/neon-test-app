@@ -34,14 +34,22 @@ export class EditProductComponent implements OnInit, OnDestroy {
     });
 
     this.route.data.subscribe((data: { product: Product, locations: ProductLocation[] }) => {
-      this.editProductForm.patchValue(data.product);
       this.locations = data.locations;
       this.floors = data.locations.map(l => l.floor.name);
-      this.sections = data.locations[0].sections.map(s => s.name);
+      this.sections = data.locations.find(f => f.floor.name === data.product.floor).sections.map(s => s.name);
+
+      this.editProductForm.patchValue({ ...data.product });
     });
 
     this.location$ = this.editProductForm.get('floor').valueChanges.subscribe(floor => {
-      this.sections = this.locations.find(l => l.floor.name === floor).sections.map(s => s.name);
+      if (floor) {
+        this.sections = this.locations.find(l => l.floor.name === floor).sections.map(s => s.name);
+        this.editProductForm.get('section').enable();
+        this.editProductForm.get('section').setValue('');
+      } else {
+        this.editProductForm.get('section').disable();
+        this.editProductForm.get('section').setValue('');
+      }
     });
 
   }

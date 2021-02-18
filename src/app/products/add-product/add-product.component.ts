@@ -2,10 +2,10 @@ import { Product } from '../shared/models/product.model';
 import { ProductLocation } from '../shared/models/location.model';
 import { ProductService } from '../shared/services/product.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { first, map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
@@ -26,12 +26,21 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   location$: Subscription;
 
+  isValidCode(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors> => {
+      const code = control.value;
+
+      return this.productService.isUniqueProductCode(code)
+        .pipe(map(isUnique => isUnique ? null : ({ notUniqueCode: 'Code Already exists' })));
+    };
+  }
+
   ngOnInit() {
     this.addProductForm = this.fb.group({
-      code: ['', [Validators.required, Validators.pattern(/^([A-Z]){4,6} ([0-9]){4,6}$/)]],
+      code: ['', [Validators.required, Validators.pattern(/^([A-Z]){4,6} ([0-9]){4,6}$/)], [this.isValidCode()]],
       quantity: [1, Validators.required],
       floor: ['', Validators.required],
-      section: ['', Validators.required]
+      section: [{ value: '', disabled: true }, Validators.required]
     });
 
     this.route.data.subscribe((data: { locations: ProductLocation[] }) => {
@@ -40,8 +49,15 @@ export class AddProductComponent implements OnInit, OnDestroy {
       this.sections = data.locations[0].sections.map(s => s.name);
     });
 
-    this.addProductForm.get('floor').valueChanges.subscribe(floor => {
-      this.sections = this.locations.find(l => l.floor.name === floor).sections.map(s => s.name);
+    this.location$ = this.addProductForm.get('floor').valueChanges.subscribe(floor => {
+      if (floor) {
+        this.sections = this.locations.find(l => l.floor.name === floor).sections.map(s => s.name);
+        this.addProductForm.get('section').enable();
+        this.addProductForm.get('section').setValue('');
+      } else {
+        this.addProductForm.get('section').disable();
+        this.addProductForm.get('section').setValue('');
+      }
     });
   }
 

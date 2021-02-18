@@ -61,4 +61,10 @@ export class ProductService {
 
     return of(product);
   }
+
+  isUniqueProductCode(code: string): Observable<boolean> {
+    const isUnique = products.filter(p => p.code === code).length === 0;
+
+    return of(isUnique);
+  }
 }

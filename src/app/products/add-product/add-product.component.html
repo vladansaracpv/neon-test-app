@@ -9,6 +9,7 @@
         <div *ngIf="submitted && form.code.errors" class="validation-error">
           <div *ngIf="form.code.errors.required">Code is required</div>
           <div *ngIf="form.code.errors.pattern">Please enter a valid code format</div>
+          <div *ngIf="form.code.errors.notUniqueCode">{{form.code.errors.notUniqueCode}}</div>
         </div>
       </div>
 
@@ -23,8 +24,8 @@
       <div class="formGroup">
         <label for="floor">Floor:</label>
         <select id="floor" formControlName="floor" class="form-control">
-          <option [ngValue]="null">Choose floor...</option>
-          <option *ngFor="let floor of floors">{{floor}}</option>
+          <option [ngValue]="''">Choose floor...</option>
+          <option *ngFor="let floor of floors" [ngValue]="floor">{{floor}}</option>
         </select>
         <div *ngIf="submitted && form.floor.errors" class="validation-error">
           <div *ngIf="form.floor.errors.required">Product Floor Location is required</div>
@@ -35,8 +36,8 @@
       <div class="formGroup">
         <label for="section">Section:</label>
         <select id="section" formControlName="section" class="form-control">
-          <option [ngValue]="null">Choose section...</option>
-          <option *ngFor="let section of sections">{{section}}</option>
+          <option [ngValue]="''">Choose section...</option>
+          <option *ngFor="let section of sections" [ngValue]="section">{{section}}</option>
         </select>
         <div *ngIf="submitted && form.section.errors" class="validation-error">
           <div *ngIf="form.section.errors.required">Product Section Location is required</div>
