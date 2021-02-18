@@ -16,8 +16,13 @@ import { Observable, of, Subscription } from 'rxjs';
 export class AddProductComponent implements OnInit, OnDestroy {
 
   addProductForm: FormGroup;
-  loading = false;
   submitted = false;
+
+  locations: ProductLocation[];
+  floors: string[] = [];
+  sections: string[] = [];
+
+  location$: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -27,11 +32,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     private loaderService: LoaderService
   ) { }
 
-  locations: ProductLocation[];
-  floors: string[] = [];
-  sections: string[] = [];
 
-  location$: Subscription;
 
   isValidCode(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors> => {
@@ -81,7 +82,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
     if (!this.addProductForm.valid) { return; }
 
-    this.loading = true;
     this.loaderService.showLoader();
 
     const product: Product = this.addProductForm.value;

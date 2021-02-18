@@ -14,10 +14,15 @@ import { LoaderService } from 'src/app/core/services/loader.service';
   styleUrls: ['./edit-product.component.scss']
 })
 export class EditProductComponent implements OnInit, OnDestroy {
+
   editProductForm: FormGroup;
-  loading = false;
   submitted = false;
+
   locations: ProductLocation[];
+  floors: string[] = [];
+  sections: string[] = [];
+
+  location$: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -26,11 +31,6 @@ export class EditProductComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private loaderService: LoaderService
   ) { }
-
-  floors: string[] = [];
-  sections: string[] = [];
-
-  location$: Subscription;
 
   ngOnInit() {
     this.editProductForm = this.fb.group({
@@ -80,7 +80,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
 
     this.productService.updateProduct(product)
       .pipe(first())
-      .subscribe(result => {
+      .subscribe(() => {
         this.loaderService.hideLoader();
         this.router.navigate(['/products']);
       });
