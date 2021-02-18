@@ -1,3 +1,4 @@
+import { debounceTime, delay } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Product } from '../models/product.model';
@@ -43,7 +44,7 @@ export class ProductService {
   createProduct(product: Product): Observable<Product> {
     products.push(product);
 
-    return of(product);
+    return of(product).pipe(delay(1500));
   }
 
   updateProduct(product: Product): Observable<Product> {
@@ -51,7 +52,7 @@ export class ProductService {
 
     products[productId] = product;
 
-    return of(product);
+    return of(product).pipe(delay(1500));
   }
 
   deleteProduct(product: Product): Observable<Product> {

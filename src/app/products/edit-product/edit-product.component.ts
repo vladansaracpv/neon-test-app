@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -18,7 +19,13 @@ export class EditProductComponent implements OnInit, OnDestroy {
   submitted = false;
   locations: ProductLocation[];
 
-  constructor(private fb: FormBuilder, private productService: ProductService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private loaderService: LoaderService
+  ) { }
 
   floors: string[] = [];
   sections: string[] = [];
@@ -67,13 +74,14 @@ export class EditProductComponent implements OnInit, OnDestroy {
 
     if (!this.editProductForm.valid) { return; }
 
-    this.loading = true;
+    this.loaderService.showLoader();
 
     const product: Product = this.editProductForm.value;
 
     this.productService.updateProduct(product)
       .pipe(first())
       .subscribe(result => {
+        this.loaderService.hideLoader();
         this.router.navigate(['/products']);
       });
   }

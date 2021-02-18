@@ -1,3 +1,4 @@
+import { LoaderService } from './../../core/services/loader.service';
 import { Product } from '../shared/models/product.model';
 import { ProductLocation } from '../shared/models/location.model';
 import { ProductService } from '../shared/services/product.service';
@@ -18,7 +19,13 @@ export class AddProductComponent implements OnInit, OnDestroy {
   loading = false;
   submitted = false;
 
-  constructor(private fb: FormBuilder, private productService: ProductService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private loaderService: LoaderService
+  ) { }
 
   locations: ProductLocation[];
   floors: string[] = [];
@@ -75,12 +82,14 @@ export class AddProductComponent implements OnInit, OnDestroy {
     if (!this.addProductForm.valid) { return; }
 
     this.loading = true;
+    this.loaderService.showLoader();
 
     const product: Product = this.addProductForm.value;
 
     this.productService.createProduct(product)
       .pipe(first())
       .subscribe(() => {
+        this.loaderService.hideLoader();
         this.router.navigate(['/products']);
       });
   }
