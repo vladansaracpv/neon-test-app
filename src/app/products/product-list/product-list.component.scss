@@ -1,3 +1,5 @@
+@import "../../../styles/colors";
+
 .table-header {
   display: flex;
   justify-content: space-between;
@@ -21,16 +23,16 @@
 
 #products td,
 #products th {
-  border: 1px solid #ddd;
+  border: 1px solid $grey2;
   padding: 8px;
 }
 
 #products tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: $light;
 }
 
 #products tr:hover {
-  background-color: #ddd;
+  background-color: $grey2;
   cursor: pointer;
 }
 
@@ -38,6 +40,6 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: rgb(255, 0, 30);
-  color: white;
+  background-color: $red;
+  color: $white;
 }

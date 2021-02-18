@@ -1,7 +1,9 @@
+@import "../../../../styles/colors";
+
 header {
   overflow: hidden;
-  background-color: #ff001e;
-  color: #fff;
+  background-color: $red;
+  color: $white;
   font-weight: 600;
   height: 60px;
   display: flex;
